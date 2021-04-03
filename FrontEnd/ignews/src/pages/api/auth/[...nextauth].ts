@@ -1,37 +1,68 @@
-import NextAuth from "next-auth";
+import NextAuth, { Session } from "next-auth";
 import Providers from "next-auth/providers";
 
 import { query as q } from "faunadb";
-
 import { fauna } from "../../../services/fauna";
 
 export default NextAuth({
   providers: [
+    // OAuth authentication providers...
     Providers.GitHub({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       scope: "read:user",
     }),
   ],
+  // Optional SQL or MongoDB database to persist users
+  database: process.env.DATABASE_URL,
   callbacks: {
-    async signIn(user, acount, profile) {
-      const { email } = user;
-
+    async session(session: Session) {
       try {
-        await fauna.query(
-          q.If(
-            q.Not(
-              q.Exists(
-                q.Match(q.Index("user_by_email"), q.Casefold(user.email))
-              )
-            ),
-            q.Create(q.Collection("users"), { data: { email } }),
-            q.Get(q.Match(q.Index("user_by_email"), q.Casefold(user.email)))
+        const getUserRefByEmail = q.Select(
+          "ref",
+          q.Get(
+            q.Match(q.Index("user_by_email"), q.Casefold(session.user.email))
           )
         );
 
-        return true;
+        const userActiveSubscription = await fauna.query(
+          q.Get(
+            q.Intersection([
+              q.Match(q.Index("subscription_by_user_ref"), getUserRefByEmail),
+              q.Match(q.Index("subscription_by_status"), "active"),
+            ])
+          )
+        );
+
+        return {
+          ...session,
+          activeSubscription: userActiveSubscription,
+        };
       } catch (error) {
+        return {
+          ...session,
+          activeSubscription: null,
+        };
+      }
+    },
+    async signIn(user, account, profile) {
+      const { email } = user;
+      console.log(user);
+
+      const createUser = q.Create(q.Collection("users"), { data: { email } });
+
+      const userWithEmail = q.Match(
+        q.Index("user_by_email"),
+        q.Casefold(user.email)
+      );
+
+      try {
+        await fauna.query(
+          q.If(q.Not(q.Exists(userWithEmail)), createUser, q.Get(userWithEmail))
+        );
+
+        return true;
+      } catch {
         return false;
       }
     },
