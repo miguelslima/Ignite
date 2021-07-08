@@ -1,11 +1,13 @@
 import React from "react";
-
-import { Container, Title } from "./styles";
+import { Text } from "react-native";
+import { Container, Header } from "./styles";
 
 export function Dashboard() {
   return (
     <Container>
-      <Title>Dashboard</Title>
+      <Header>
+        <Text>Miguel Lima</Text>
+      </Header>
     </Container>
   );
 }
