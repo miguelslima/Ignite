@@ -1,10 +1,26 @@
-import React from "react";
-import { View } from "react-native";
-import { Input } from "../../components/Forms/Input";
+import React, { useState } from "react";
 
-import { Container, Header, Title, Form } from "./styles";
+import { View } from "react-native";
+import { Button } from "../../components/Forms/Button";
+import { Input } from "../../components/Forms/Input";
+import { TransactionTypeButton } from "../../components/Forms/TransactionTypeButton";
+
+import {
+  Container,
+  Header,
+  Title,
+  Form,
+  Fields,
+  TransactionTypes,
+} from "./styles";
 
 export function Register() {
+  const [transactionType, setTransactionType] = useState("");
+
+  function handleTransactionTypesSelect(type: "up" | "down") {
+    setTransactionType(type);
+  }
+
   return (
     <Container>
       <Header>
@@ -12,8 +28,27 @@ export function Register() {
       </Header>
 
       <Form>
-        <Input placeholder="Nome" />
-        <Input placeholder="Preço" />
+        <Fields>
+          <Input placeholder="Nome" />
+          <Input placeholder="Preço" />
+
+          <TransactionTypes>
+            <TransactionTypeButton
+              type="up"
+              title="Income"
+              onPress={() => handleTransactionTypesSelect("up")}
+              isActive={transactionType === "up"}
+            />
+            <TransactionTypeButton
+              type="down"
+              title="Outcome"
+              onPress={() => handleTransactionTypesSelect("down")}
+              isActive={transactionType === "down"}
+            />
+          </TransactionTypes>
+        </Fields>
+
+        <Button title="Enviar" />
       </Form>
     </Container>
   );
