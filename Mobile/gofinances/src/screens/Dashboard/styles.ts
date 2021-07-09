@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
-
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 export const Container = styled.View`
@@ -26,7 +26,7 @@ export const UserWrapper = styled.View`
   align-items: center;
 
   padding: 0 24px;
-  margin-top: 50px;
+  margin-top: ${getStatusBarHeight() + RFValue(18)}px;
 `;
 
 export const UserInfo = styled.View`
@@ -66,4 +66,8 @@ export const HighlightCards = styled.ScrollView.attrs({
   horizontal: true,
   showsHorizontalScrollIndicator: false,
   contentContainerStyle: { paddingHorizontal: 24 },
-})``;
+})`
+  width: 100%;
+  position: absolute;
+  margin-top: ${RFPercentage(22)}px;
+`;
