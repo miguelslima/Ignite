@@ -42,7 +42,7 @@ export const Container = styled(TouchableOpacity)<ContainerProps>`
 `;
 
 export const Icon = styled(Feather)<IconProps>`
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(20)}px;
   margin-right: 12px;
 
   color: ${({ theme, type }) =>
