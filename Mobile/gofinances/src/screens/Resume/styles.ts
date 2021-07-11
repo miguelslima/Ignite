@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 import { BorderlessButton } from "react-native-gesture-handler";
-import { RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 export const Container = styled.View`
   flex: 1;
@@ -26,6 +26,21 @@ export const Title = styled.Text`
 `;
 
 export const Content = styled.ScrollView``;
+
+export const NoTransaction = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: ${RFPercentage(20)}px;
+`;
+
+export const NoTransactionText = styled.Text`
+  color: ${({ theme }) => theme.colors.attention};
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(25)}px;
+  text-align: center;
+`;
 
 export const ChartContainer = styled.View`
   width: 100%;

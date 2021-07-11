@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, View, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { VictoryPie } from "victory-native";
 import { addMonths, subMonths, format } from "date-fns";
@@ -13,6 +13,8 @@ import {
   Header,
   Title,
   Content,
+  NoTransaction,
+  NoTransactionText,
   ChartContainer,
   MonthSelect,
   MonthSelectButton,
@@ -155,31 +157,43 @@ export function Resume() {
             </MonthSelectButton>
           </MonthSelect>
 
-          <ChartContainer>
-            <VictoryPie
-              data={totalByCategories}
-              colorScale={totalByCategories.map((category) => category.color)}
-              style={{
-                labels: {
-                  fontSize: RFValue(18),
-                  fontWeight: "bold",
-                  fill: theme.colors.shape,
-                },
-              }}
-              labelRadius={80}
-              x="percent"
-              y="total"
-            />
-          </ChartContainer>
+          {totalByCategories.length === 0 ? (
+            <NoTransaction>
+              <NoTransactionText>
+                Sem movimentação no período selecionado!
+              </NoTransactionText>
+            </NoTransaction>
+          ) : (
+            <>
+              <ChartContainer>
+                <VictoryPie
+                  data={totalByCategories}
+                  colorScale={totalByCategories.map(
+                    (category) => category.color
+                  )}
+                  style={{
+                    labels: {
+                      fontSize: RFValue(18),
+                      fontWeight: "bold",
+                      fill: theme.colors.shape,
+                    },
+                  }}
+                  labelRadius={80}
+                  x="percent"
+                  y="total"
+                />
+              </ChartContainer>
 
-          {totalByCategories.map((item) => (
-            <HistoryCard
-              key={item.key}
-              title={item.name}
-              amount={item.totalFormatted}
-              color={item.color}
-            />
-          ))}
+              {totalByCategories.map((item) => (
+                <HistoryCard
+                  key={item.key}
+                  title={item.name}
+                  amount={item.totalFormatted}
+                  color={item.color}
+                />
+              ))}
+            </>
+          )}
         </Content>
       )}
     </Container>
