@@ -12,7 +12,7 @@ interface Props {
   imagesUrl: string[];
 }
 
-function ImageSlider({ imagesUrl }: Props) {
+export function ImageSlider({ imagesUrl }: Props) {
   return (
     <Container>
       <ImageIndexes>
@@ -28,5 +28,3 @@ function ImageSlider({ imagesUrl }: Props) {
     </Container>
   );
 }
-
-export default ImageSlider;

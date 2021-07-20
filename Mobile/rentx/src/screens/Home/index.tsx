@@ -5,7 +5,7 @@ import { StatusBar } from "react-native";
 import Logo from "../../assets/logo.svg";
 
 import { CarList, Container, Header, HeaderContent, TotalCars } from "./styles";
-import Car from "../../components/Car";
+import { Car } from "../../components/Car";
 
 export function Home() {
   const carData = {

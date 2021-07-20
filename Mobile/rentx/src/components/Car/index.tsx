@@ -29,7 +29,7 @@ interface Props {
   data: CarData;
 }
 
-function Car({ data }: Props) {
+export function Car({ data }: Props) {
   return (
     <Container>
       <Details>
@@ -53,4 +53,4 @@ function Car({ data }: Props) {
   );
 }
 
-export default Car;
+

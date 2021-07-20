@@ -9,7 +9,7 @@ interface BackButtonProps extends BorderlessButtonProps {
   color?: string;
 }
 
-function BackButton({ color, ...rest }: BackButtonProps) {
+export function BackButton({ color, ...rest }: BackButtonProps) {
   const theme = useTheme();
 
   return (
@@ -23,4 +23,3 @@ function BackButton({ color, ...rest }: BackButtonProps) {
   );
 }
 
-export default BackButton;
