@@ -11,6 +11,7 @@ export const Container = styled(RectButton)`
   align-items: center;
   justify-content: center;
 `;
+
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.primary_500};
   color: ${({ theme }) => theme.colors.shape};
