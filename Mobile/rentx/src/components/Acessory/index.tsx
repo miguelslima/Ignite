@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { SvgProps } from "react-native-svg";
+import { SvgProps } from 'react-native-svg';
 
-import { Container, Name } from "./styles";
+import { Container, Name } from './styles';
 
 interface AcessoryProps {
   name: string;

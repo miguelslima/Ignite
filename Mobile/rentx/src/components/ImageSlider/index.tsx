@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Container,
@@ -6,7 +6,7 @@ import {
   ImageIndex,
   CarImageWrapper,
   CarImage,
-} from "./styles";
+} from './styles';
 
 interface Props {
   imagesUrl: string[];
@@ -23,7 +23,7 @@ export function ImageSlider({ imagesUrl }: Props) {
       </ImageIndexes>
 
       <CarImageWrapper>
-        <CarImage source={{ uri: imagesUrl[0] }} resizeMode="contain" />
+        <CarImage source={{ uri: imagesUrl[0] }} resizeMode='contain' />
       </CarImageWrapper>
     </Container>
   );

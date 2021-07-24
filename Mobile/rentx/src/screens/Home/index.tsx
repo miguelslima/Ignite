@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { RFValue } from "react-native-responsive-fontsize";
-import { useNavigation } from "@react-navigation/native";
-import { StatusBar } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'react-native';
 
-import Logo from "../../assets/logo.svg";
+import Logo from '../../assets/logo.svg';
 
-import { CarList, Container, Header, HeaderContent, TotalCars } from "./styles";
-import { Car } from "../../components/Car";
-import api from "../../services/api";
+import { CarList, Container, Header, HeaderContent, TotalCars } from './styles';
+import { Car } from '../../components/Car';
+import api from '../../services/api';
 
-import { CarDTO } from "../../dtos/CarDTO";
-import { Loading } from "../../components/Loading";
+import { CarDTO } from '../../dtos/CarDTO';
+import { Loading } from '../../components/Loading';
 
 export function Home() {
   const navigation = useNavigation();
@@ -18,13 +18,13 @@ export function Home() {
   const [loading, setLoading] = useState(true);
 
   function handleCarDetails(car: CarDTO) {
-    navigation.navigate("CarDetails", { car });
+    navigation.navigate('CarDetails', { car });
   }
 
   useEffect(() => {
     async function fetchCars() {
       try {
-        const response = await api.get("/cars");
+        const response = await api.get('/cars');
         setCars(response.data);
       } catch (error) {
         console.log(error);
@@ -39,8 +39,8 @@ export function Home() {
   return (
     <Container>
       <StatusBar
-        barStyle="light-content"
-        backgroundColor="transparent"
+        barStyle='light-content'
+        backgroundColor='transparent'
         translucent
       />
       <Header>

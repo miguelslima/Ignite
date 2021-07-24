@@ -1,9 +1,9 @@
 import {
   getBottomSpace,
   getStatusBarHeight,
-} from "react-native-iphone-x-helper";
-import { RFValue } from "react-native-responsive-fontsize";
-import styled from "styled-components/native";
+} from 'react-native-iphone-x-helper';
+import { RFValue } from 'react-native-responsive-fontsize';
+import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
@@ -27,7 +27,7 @@ export const CarImages = styled.View`
 export const Content = styled.ScrollView.attrs({
   contentContainerStyle: {
     padding: 24,
-    alingItems: "center",
+    alingItems: 'center',
   },
   showsVerticalScrollIndicator: false,
 })``;

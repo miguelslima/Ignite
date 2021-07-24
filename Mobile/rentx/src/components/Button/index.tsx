@@ -1,7 +1,7 @@
-import React from "react";
-import { useTheme } from "styled-components";
+import React from 'react';
+import { useTheme } from 'styled-components';
 
-import { Container, Title } from "./styles";
+import { Container, Title } from './styles';
 
 interface Props {
   title: string;

@@ -1,56 +1,56 @@
-import React from "react";
-import { useTheme } from "styled-components";
-import { Feather } from "@expo/vector-icons";
+import React from 'react';
+import { useTheme } from 'styled-components';
+import { Feather } from '@expo/vector-icons';
 
 import {
   Calendar as CustomCalendar,
   LocaleConfig,
-} from "react-native-calendars";
+} from 'react-native-calendars';
 
-LocaleConfig.locales["pt-br"] = {
+LocaleConfig.locales['pt-br'] = {
   monthNames: [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
   ],
   monthNamesShort: [
-    "Jan",
-    "Fev",
-    "Mar",
-    "Abr",
-    "Mai",
-    "Jun",
-    "jul",
-    "Ago",
-    "Set",
-    "Out",
-    "Nov",
-    "Dez",
+    'Jan',
+    'Fev',
+    'Mar',
+    'Abr',
+    'Mai',
+    'Jun',
+    'jul',
+    'Ago',
+    'Set',
+    'Out',
+    'Nov',
+    'Dez',
   ],
   dayNames: [
-    "Domingo",
-    "Segunda",
-    "Terça",
-    "Quarta",
-    "Quinta",
-    "Sexta",
-    "Sábado",
+    'Domingo',
+    'Segunda',
+    'Terça',
+    'Quarta',
+    'Quinta',
+    'Sexta',
+    'Sábado',
   ],
 
-  dayNamesShort: ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"],
-  today: "Hoje",
+  dayNamesShort: ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'],
+  today: 'Hoje',
 };
 
-LocaleConfig.defaultLocale = "pt-br";
+LocaleConfig.defaultLocale = 'pt-br';
 
 export function Calendar() {
   const theme = useTheme();
@@ -61,7 +61,7 @@ export function Calendar() {
         <Feather
           size={24}
           color={theme.colors.text}
-          name={direction == "left" ? "chevron-left" : "chevron-right"}
+          name={direction == 'left' ? 'chevron-left' : 'chevron-right'}
         />
       )}
       headerStyle={{
