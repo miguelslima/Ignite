@@ -24,11 +24,12 @@ import {
   TotalCars,
   MyCarsButton,
 } from './styles';
-import { Car } from '../../components/Car';
 import api from '../../services/api';
-
 import { CarDTO } from '../../dtos/CarDTO';
+
 import { Loading } from '../../components/Loading';
+import { Car } from '../../components/Car';
+import { LoadAnimation } from '../../components/LoadAnimation';
 
 export function Home() {
   const theme = useTheme();
@@ -108,7 +109,7 @@ export function Home() {
       </Header>
 
       {loading ? (
-        <Loading />
+        <LoadAnimation />
       ) : (
         <CarList
           data={cars}
