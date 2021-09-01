@@ -12,6 +12,7 @@ import Animated, {
   useAnimatedGestureHandler,
   withSpring,
 } from 'react-native-reanimated';
+
 const ButtonAnimated = Animated.createAnimatedComponent(RectButton);
 
 import Logo from '../../assets/logo.svg';
@@ -120,7 +121,7 @@ export function Home() {
         />
       )}
 
-      <PanGestureHandler onGestureEvent={onGestureEvent}>
+      {/* <PanGestureHandler onGestureEvent={onGestureEvent}>
         <Animated.View
           style={[
             myCarsButtonStyle,
@@ -142,7 +143,7 @@ export function Home() {
             />
           </ButtonAnimated>
         </Animated.View>
-      </PanGestureHandler>
+      </PanGestureHandler> */}
     </Container>
   );
 }
