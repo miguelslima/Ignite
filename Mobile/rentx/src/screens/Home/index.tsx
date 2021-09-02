@@ -25,7 +25,7 @@ import {
   TotalCars,
   MyCarsButton,
 } from './styles';
-import api from '../../services/api';
+import { api } from '../../services/api';
 import { CarDTO } from '../../dtos/CarDTO';
 
 import { Loading } from '../../components/Loading';

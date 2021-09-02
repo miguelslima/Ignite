@@ -1,16 +1,15 @@
 import React from 'react';
 import { Platform } from 'react-native';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components';
-
-import { AppStackRoutes } from './app.stack.routes';
 
 import HomeSvg from '../assets/home.svg';
 import CarSvg from '../assets/car.svg';
 import PeopleSvg from '../assets/people.svg';
 
+import { AppStackRoutes } from './app.stack.routes';
 import { MyCars } from '../screens/MyCars';
+// import { Profile } from '../screens/Profile';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 

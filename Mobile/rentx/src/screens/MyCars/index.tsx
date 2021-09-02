@@ -10,7 +10,7 @@ import { Loading } from '../../components/Loading';
 
 import { Car } from '../../components/Car';
 import { CarDTO } from '../../dtos/CarDTO';
-import api from '../../services/api';
+import { api } from '../../services/api';
 
 import {
   Container,

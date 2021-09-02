@@ -21,7 +21,7 @@ import {
 import { Bullet } from '../../../components/Bullet';
 import { Button } from '../../../components/Button';
 import { PasswordInput } from '../../../components/PasswordInput';
-import api from '../../../services/api';
+import { api } from '../../../services/api';
 
 interface Params {
   user: {
@@ -58,18 +58,18 @@ export function SignUpSecondStep() {
       .post('/users', {
         name: user.name,
         email: user.email,
-        drive_license: user.driverLicense,
+        driver_license: user.driverLicense,
         password,
       })
       .then(() => {
         navigation.navigate('Confirmation', {
-          nextScreenRoutes: 'SignIn',
-          title: 'Conta criada!',
-          message: `Agora é so fazer login\ne aproveitar`,
+          nextScreenRoute: 'SignIn',
+          title: 'Conta Criada!',
+          message: `Agora é só fazer login\ne aproveitar.`,
         });
       })
       .catch(() => {
-        Alert.alert('Opa!', 'Não foi possível cadastrar!');
+        Alert.alert('Opa', 'Não foi possível cadastrar');
       });
   }
 
