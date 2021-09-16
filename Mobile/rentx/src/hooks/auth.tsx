@@ -28,6 +28,7 @@ interface SignInCredentials {
 interface AuthContextData {
   user: User;
   signIn: (credentials: SignInCredentials) => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -41,10 +42,12 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   async function signIn({ email, password }: SignInCredentials) {
     try {
-      const response = await api.post('/sessions', { email, password });
+      const response = await api.post('/sessions', {
+        email,
+        password,
+      });
 
       const { token, user } = response.data;
-
       api.defaults.headers.authorization = `Bearer ${token}`;
 
       const userCollection = database.get<ModelUser>('users');
@@ -54,11 +57,26 @@ function AuthProvider({ children }: AuthProviderProps) {
             (newUser.name = user.name),
             (newUser.email = user.email),
             (newUser.driver_license = user.driver_license),
+            (newUser.avatar = user.avatar),
             (newUser.token = token);
         });
       });
 
       setData({ ...user, token });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async function signOut() {
+    try {
+      const userCollection = database.get<ModelUser>('users');
+      await database.action(async () => {
+        const userSelected = await userCollection.find(data.id);
+        await userSelected.destroyPermanently();
+      });
+
+      setData({} as User);
     } catch (error) {
       throw new Error(error);
     }
@@ -85,6 +103,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       value={{
         user: data,
         signIn,
+        signOut,
       }}
     >
       {children}
