@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { useNavigation } from '@react-navigation/native';
-import { useTheme } from 'styled-components';
-import { StatusBar, StyleSheet, BackHandler } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { RectButton, PanGestureHandler } from 'react-native-gesture-handler';
+import React, { useEffect, useState } from "react";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "styled-components";
+import { StatusBar, StyleSheet, BackHandler, Alert } from "react-native";
+
+import { RectButton, PanGestureHandler } from "react-native-gesture-handler";
+
+import { useNetInfo } from "@react-native-community/netinfo";
 
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   useAnimatedGestureHandler,
   withSpring,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 
 const ButtonAnimated = Animated.createAnimatedComponent(RectButton);
 
-import Logo from '../../assets/logo.svg';
+import Logo from "../../assets/logo.svg";
 
 import {
   CarList,
@@ -24,17 +26,19 @@ import {
   HeaderContent,
   TotalCars,
   MyCarsButton,
-} from './styles';
-import { api } from '../../services/api';
-import { CarDTO } from '../../dtos/CarDTO';
+} from "./styles";
+import { api } from "../../services/api";
+import { CarDTO } from "../../dtos/CarDTO";
 
-import { Loading } from '../../components/Loading';
-import { Car } from '../../components/Car';
-import { LoadAnimation } from '../../components/LoadAnimation';
+import { Loading } from "../../components/Loading";
+import { Car } from "../../components/Car";
+import { LoadAnimation } from "../../components/LoadAnimation";
 
 export function Home() {
   const theme = useTheme();
   const navigation = useNavigation();
+  const netInfo = useNetInfo();
+
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -66,19 +70,27 @@ export function Home() {
   });
 
   function handleCarDetails(car: CarDTO) {
-    navigation.navigate('CarDetails', { car });
+    navigation.navigate("CarDetails", { car });
   }
 
   function handleOpenMyCars() {
-    navigation.navigate('MyCars');
+    navigation.navigate("MyCars");
   }
+
+  useEffect(() => {
+    if (netInfo.isConnected) {
+      Alert.alert("Você está online");
+    } else {
+      Alert.alert("Você está online");
+    }
+  }, [netInfo.isConnected]);
 
   useEffect(() => {
     let isMounted = true;
 
     async function fetchCars() {
       try {
-        const response = await api.get('/cars');
+        const response = await api.get("/cars");
         if (isMounted) {
           setCars(response.data);
         }
@@ -99,7 +111,7 @@ export function Home() {
   }, []);
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    BackHandler.addEventListener("hardwareBackPress", () => {
       return true;
     });
   }, []);
@@ -107,8 +119,8 @@ export function Home() {
   return (
     <Container>
       <StatusBar
-        barStyle='light-content'
-        backgroundColor='transparent'
+        barStyle="light-content"
+        backgroundColor="transparent"
         translucent
       />
       <Header>
@@ -163,7 +175,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
