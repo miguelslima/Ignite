@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
-} from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import * as Yup from "yup";
+} from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import * as Yup from 'yup';
+import { useNetInfo } from '@react-native-community/netinfo';
 
-import { useNavigation } from "@react-navigation/core";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useNavigation } from '@react-navigation/core';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
-import { useAuth } from "../../hooks/auth";
-import { Feather } from "@expo/vector-icons";
-import { useTheme } from "styled-components";
+import { useAuth } from '../../hooks/auth';
+import { Feather } from '@expo/vector-icons';
+import { useTheme } from 'styled-components';
 
 import {
   Container,
@@ -29,18 +30,19 @@ import {
   PhotoButton,
   PhotoContainer,
   Section,
-} from "./styles";
-import { BackButton } from "../../components/BackButton";
-import { Input } from "../../components/Input";
-import { PasswordInput } from "../../components/PasswordInput";
-import { Button } from "../../components/Button";
+} from './styles';
+import { BackButton } from '../../components/BackButton';
+import { Input } from '../../components/Input';
+import { PasswordInput } from '../../components/PasswordInput';
+import { Button } from '../../components/Button';
 
 export function Profile() {
   const theme = useTheme();
   const navigation = useNavigation();
   const { user, signOut, updateUser } = useAuth();
+  const netInfo = useNetInfo();
 
-  const [option, setOption] = useState<"dataEdit" | "passwordEdit">("dataEdit");
+  const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
   const [avatar, setAvatar] = useState(user?.avatar);
   const [name, setName] = useState(user?.name);
   const [driveLicense, setDriveLicense] = useState(user?.driver_license);
@@ -49,8 +51,15 @@ export function Profile() {
     navigation.goBack();
   }
 
-  function handleOptionChange(optionSelected: "dataEdit" | "passwordEdit") {
-    setOption(optionSelected);
+  function handleOptionChange(optionSelected: 'dataEdit' | 'passwordEdit') {
+    if (netInfo.isConnected === false && optionSelected === 'passwordEdit') {
+      Alert.alert(
+        'Você está offline',
+        'Para mudar a senha conecte-se à Internet'
+      );
+    } else {
+      setOption(optionSelected);
+    }
   }
 
   async function handleSelectAvatar() {
@@ -72,15 +81,15 @@ export function Profile() {
 
   async function handleSignOut() {
     Alert.alert(
-      "Tem certeza?",
-      "Se você sair, irá precisa de internet para conectar-se novamente",
+      'Tem certeza?',
+      'Se você sair, irá precisa de internet para conectar-se novamente',
       [
         {
-          text: "Cancelar",
+          text: 'Cancelar',
           onPress: () => {},
         },
         {
-          text: "Sair",
+          text: 'Sair',
           onPress: () => signOut(),
         },
       ]
@@ -90,8 +99,8 @@ export function Profile() {
   async function handleProfileUpdate() {
     try {
       const schema = Yup.object().shape({
-        driveLicense: Yup.string().required("CNH é obrigatória"),
-        name: Yup.string().required("Nome é obrigatório"),
+        driveLicense: Yup.string().required('CNH é obrigatória'),
+        name: Yup.string().required('Nome é obrigatório'),
       });
 
       const data = { name, driveLicense };
@@ -107,18 +116,18 @@ export function Profile() {
         token: user.token,
       });
 
-      Alert.alert("Perfil atualizado!");
+      Alert.alert('Perfil atualizado!');
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
-        Alert.alert("Opa!", error.message);
+        Alert.alert('Opa!', error.message);
       }
 
-      Alert.alert("Não foi possível atualizar o perfil!");
+      Alert.alert('Não foi possível atualizar o perfil!');
     }
   }
 
   return (
-    <KeyboardAvoidingView behavior="position" enabled>
+    <KeyboardAvoidingView behavior='position' enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
           <Header>
@@ -126,7 +135,7 @@ export function Profile() {
               <BackButton color={theme.colors.shape} onPress={handleBack} />
               <HeaderTitle>Editar Perfil</HeaderTitle>
               <LogoutButton onPress={handleSignOut}></LogoutButton>
-              <Feather name="power" size={24} color={theme.colors.shape} />
+              <Feather name='power' size={24} color={theme.colors.shape} />
             </HeaderTop>
 
             <PhotoContainer>
@@ -138,7 +147,7 @@ export function Profile() {
                 />
               )}
               <PhotoButton onPress={handleSelectAvatar}>
-                <Feather name="camera" size={24} color={theme.colors.shape} />
+                <Feather name='camera' size={24} color={theme.colors.shape} />
               </PhotoButton>
             </PhotoContainer>
           </Header>
@@ -146,55 +155,55 @@ export function Profile() {
           <Content style={{ marginBottom: useBottomTabBarHeight() }}>
             <Options>
               <Option
-                active={option === "dataEdit"}
-                onPress={() => handleOptionChange("dataEdit")}
+                active={option === 'dataEdit'}
+                onPress={() => handleOptionChange('dataEdit')}
               >
-                <OptionTitle active={option === "dataEdit"}>Dados</OptionTitle>
+                <OptionTitle active={option === 'dataEdit'}>Dados</OptionTitle>
               </Option>
-              <Option active={option === "passwordEdit"}>
+              <Option active={option === 'passwordEdit'}>
                 <OptionTitle
-                  active={option === "passwordEdit"}
-                  onPress={() => handleOptionChange("passwordEdit")}
+                  active={option === 'passwordEdit'}
+                  onPress={() => handleOptionChange('passwordEdit')}
                 >
                   Trocar senha
                 </OptionTitle>
               </Option>
             </Options>
 
-            {option === "dataEdit" ? (
+            {option === 'dataEdit' ? (
               <Section>
                 <Input
-                  iconName="user"
-                  placeholder="Nome"
+                  iconName='user'
+                  placeholder='Nome'
                   autoCorrect={false}
                   defaultValue={user.name}
                   onChangeText={setName}
                 />
                 <Input
-                  iconName="mail"
+                  iconName='mail'
                   editable={false}
                   defaultValue={user.email}
                 />
                 <Input
-                  iconName="credit-card"
-                  placeholder="CNH"
-                  keyboardType="numeric"
+                  iconName='credit-card'
+                  placeholder='CNH'
+                  keyboardType='numeric'
                   defaultValue={user.driver_license}
                   onChangeText={setDriveLicense}
                 />
               </Section>
             ) : (
               <Section>
-                <PasswordInput iconName="lock" placeholder="Senha atual" />
-                <PasswordInput iconName="lock" placeholder="Nova senha" />
+                <PasswordInput iconName='lock' placeholder='Senha atual' />
+                <PasswordInput iconName='lock' placeholder='Nova senha' />
                 <PasswordInput
-                  iconName="lock"
-                  placeholder="Confirmar nova senha"
+                  iconName='lock'
+                  placeholder='Confirmar nova senha'
                 />
               </Section>
             )}
 
-            <Button title="Salvar alterações" onPress={handleProfileUpdate} />
+            <Button title='Salvar alterações' onPress={handleProfileUpdate} />
           </Content>
         </Container>
       </TouchableWithoutFeedback>

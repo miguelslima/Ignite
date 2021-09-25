@@ -30,6 +30,7 @@ import {
   Price,
   About,
   Accessories,
+  OfflineInfo,
   Footer,
 } from './styles';
 import { useTheme } from 'styled-components';
@@ -170,6 +171,12 @@ export function CarDetails() {
           onPress={handleConfirmRental}
           enabled={netInfo.isConnected === true}
         />
+
+        {netInfo.isConnected === false && (
+          <OfflineInfo>
+            Conecte-se à Internet para ver mais detalhes e agendar seu carro.
+          </OfflineInfo>
+        )}
       </Footer>
     </Container>
   );
