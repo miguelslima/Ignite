@@ -24,7 +24,7 @@ export function AppTabRoutes() {
         showLabel: false,
         style: {
           paddingVertical: Platform.OS === 'ios' ? 20 : 0,
-          height: 78,
+          height: 40,
           backgroundColor: theme.colors.background_primary,
         },
       }}
@@ -34,7 +34,7 @@ export function AppTabRoutes() {
         component={AppStackRoutes}
         options={{
           tabBarIcon: ({ color }) => (
-            <HomeSvg width={24} height={24} fill={color} />
+            <HomeSvg width={20} height={20} fill={color} />
           ),
         }}
       />
@@ -43,7 +43,7 @@ export function AppTabRoutes() {
         component={MyCars}
         options={{
           tabBarIcon: ({ color }) => (
-            <CarSvg width={24} height={24} fill={color} />
+            <CarSvg width={20} height={20} fill={color} />
           ),
         }}
       />
@@ -52,7 +52,7 @@ export function AppTabRoutes() {
         component={Profile}
         options={{
           tabBarIcon: ({ color }) => (
-            <PeopleSvg width={24} height={24} fill={color} />
+            <PeopleSvg width={20} height={20} fill={color} />
           ),
         }}
       />

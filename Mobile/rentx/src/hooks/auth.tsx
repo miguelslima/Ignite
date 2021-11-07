@@ -118,7 +118,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       }
     }
 
-    loadUserData;
+    loadUserData();
   }, []);
 
   return (
